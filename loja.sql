@@ -1,96 +1,94 @@
-create database teste2;
+create database teste;
 
-use teste2
+use teste;
 
-create table pedido(
-    id_pedido int primary key,
-    id_utilizador int foreign key references utilizadores (id_utilizador),
-    estado char(100),
-    data_prevista date,
-    data_envio date,
-)
+CREATE TABLE pedido (
+    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    estado CHAR(100),
+    data_prevista DATE,
+    data_envio DATE
+);
 
-create table ticket(
-    id_ticket int primary key,
-    id_utilizador int foreign key references utilizadores (id_utilizador),
-    data_abertura date,
-    assunto char(150),
-    descricao char(300),
-    estado bit,
-    nome_utilizador char(200),
-)
+CREATE TABLE ticket (
+    id_ticket INT AUTO_INCREMENT PRIMARY KEY,
+    data_abertura DATE,
+    assunto CHAR(150),
+    descricao CHAR(255),
+    estado BIT,
+    nome_utilizador CHAR(200)
+);
 
-create table produto(
-    id_produto int primary key,
-    id_carrinho int foreign key references carrinho (id_carrinho),
-    nome char(255),
-    preco money,
-    estado bit,
-    marca char(255),
-    quantidade int,
-    imagem image,
-)
+CREATE TABLE produto (
+    id_produto INT AUTO_INCREMENT PRIMARY KEY,
+    nome CHAR(255),
+    preco DOUBLE,
+    estado BIT,
+    marca CHAR(255),
+    quantidade INT,
+    imagem LONGBLOB
+);
 
-create table metodo_pagamento(
-    id_metodo_pagamento int primary key,
-    id_carrinho int foreign key references carrinho (id_carrinho),
-    nome char (100),
-    taxa money,
-    disponibilidade bit,
-    data_transacao date,
-)
+CREATE TABLE metodo_pagamento (
+    id_metodo_pagamento INT AUTO_INCREMENT PRIMARY KEY,
+    nome CHAR(100),
+    taxa DOUBLE,
+    disponibilidade BIT,
+    data_transacao DATE
+);
 
-create table carrinho(
-    id_carrinho int primary key,
-    id_produto int foreign key references produto (id_produto),
-    id_utilizador int foreign key references utilizadores (id_utilizador),
-    id_metodo_pagamento int foreign key references metodo_pagamento (id_metodo_pagamento),
-    preco_total money,
-)
+CREATE TABLE carrinho (
+    id_carrinho INT AUTO_INCREMENT PRIMARY KEY,
+    id_produto INT,
+    id_metodo_pagamento INT,
+    preco_total DOUBLE,
+    FOREIGN KEY (id_produto) REFERENCES produto(id_produto),
+    FOREIGN KEY (id_metodo_pagamento) REFERENCES metodo_pagamento(id_metodo_pagamento)
+);
 
-create table administrador(
-    id_super_utilizador int primary key,
-)
+CREATE TABLE administrador (
+    id_super_utilizador INT AUTO_INCREMENT PRIMARY KEY
+);
 
-create table cliente(
-    id_standard_utilizador int primary key,
-)
+CREATE TABLE cliente (
+    id_standard_utilizador INT AUTO_INCREMENT PRIMARY KEY
+);
 
-create table utilizadores(
-    id_utilizador int primary key,
-    id_administrador int foreign key references administrador (id_super_utilizador),
-    id_cliente int foreign key references cliente (id_standard_utilizador),
-    id_carrinho int foreign key references carrinho (id_carrinho),
-    id_pedido int foreign key references pedido (id_pedido),
-    id_ticket int foreign key references ticket (id_ticket),
-    nome char(255),
-    morada char(255),
-    email char(150),
-    data_nascimento date,
-    palavra_pass char(75),
-    data_registo date,
-	)
+CREATE TABLE utilizadores (
+    id_utilizador INT AUTO_INCREMENT PRIMARY KEY,
+    id_administrador INT,
+    id_cliente INT,
+    id_carrinho INT,
+    id_pedido INT,
+    id_ticket INT,
+    nome CHAR(255),
+    morada CHAR(255),
+    email CHAR(150),
+    data_nascimento DATE,
+    palavra_pass CHAR(75),
+    data_registo DATE,
+    FOREIGN KEY (id_administrador) REFERENCES administrador(id_super_utilizador),
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_standard_utilizador),
+    FOREIGN KEY (id_carrinho) REFERENCES carrinho(id_carrinho),
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
+    FOREIGN KEY (id_ticket) REFERENCES ticket(id_ticket)
+);
 
 
-	alter table pedido
-	add id_utilizador int,
-	foreign key (id_utilizador) references utilizadores (id_utilizador)
+ALTER TABLE pedido
+ADD COLUMN id_utilizador INT,
+ADD FOREIGN KEY (id_utilizador) REFERENCES utilizadores (id_utilizador);
 
-	alter table ticket
-	add id_utilizador int, 
-	foreign key (id_utilizador) references utilizadores (id_utilizador)
+ALTER TABLE ticket
+ADD COLUMN id_utilizador INT,
+ADD FOREIGN KEY (id_utilizador) REFERENCES utilizadores (id_utilizador);
 
-	alter table produto
-	add id_carrinho int,
-	foreign key (id_carrinho) references carrinho (id_carrinho)
+ALTER TABLE metodo_pagamento
+ADD COLUMN id_carrinho INT,
+ADD FOREIGN KEY (id_carrinho) REFERENCES carrinho (id_carrinho);
 
-	alter table metodo_pagamento
-	add id_carrinho int,
-	foreign key (id_carrinho) references carrinho (id_carrinho)
+ALTER TABLE carrinho
+ADD COLUMN id_utilizador INT,
+ADD FOREIGN KEY (id_utilizador) REFERENCES utilizadores (id_utilizador);
 
-	alter table carrinho
-	add id_utilizador int,
-	foreign key (id_utilizador) references utilizadores (id_utilizador)
-
-	alter table utilizadores
-	add foreign key (id_cliente) references cliente (id_standard_utilizador)
+ALTER TABLE utilizadores
+ADD FOREIGN KEY (id_cliente) REFERENCES cliente (id_standard_utilizador);
