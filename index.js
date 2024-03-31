@@ -32,7 +32,7 @@ const PostLogin = require('./models/Post')
     })
 
     app.get('/register', function (req, res) {
-        res.render('views', 'register');
+        res.render('register');
     })
 
 
