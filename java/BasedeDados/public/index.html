@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eletrostore | Ecommerce</title>
+<link rel="stylesheet" href="C:/Users/sirfa/eclipse-workspace/BasedeDados/public/styles/styles.css">
+</head>
+<body>
+<div class="navbar show-menu">
+    <div class="header-inner-content">
+        <h1 class="logo">JBD<span>STORE</span></h1>
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>Produtos</li>
+                <li>Sobre</li>
+                <li>Contacto</li>
+                <li>Conta</li>
+            </ul>
+        </nav>
+        <div class="nav-icon-container">
+            <img src="images/cart.png" alt="Carrinho">
+            <img src="images/menu.png" class="menu-button">
+        </div>
+    </div>
+</div>
+
+<header>
+    <div class="header-inner-content">
+        <div class="header-bottom-side">
+            <div class="header-bottom-side-left">
+                <h2>Loja Online de Produtos Informáticos</h2>
+                <p>
+                    O Trabalho duro consiste em superar o sucesso para se obter resultados!
+                </p>
+                <button>Ver Agora &#8594;</button>
+            </div>
+            <div class="header-bottom-side-right">
+                <img src="images/gaming-msi-header.png" alt="">
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const navbar = document.querySelector(".navbar");
+      const menuButton = document.querySelector(".menu-button");
+      
+      menuButton.addEventListener("click", function() {
+        navbar.classList.toggle("show-menu");
+      });
+    });
+</script>
+</body>
+</html>
